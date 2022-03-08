@@ -19,7 +19,6 @@ go mod tidy
 func main() {
 	port := ":5000"
 	log.Printf("starting API on port %s", port)
-
 	http.HandleFunc("/", home)
 	http.HandleFunc("/users", users)
 
