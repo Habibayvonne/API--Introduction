@@ -19,6 +19,7 @@ go mod tidy
 func main() {
 	port := ":5000"
 	log.Printf("starting API on port %s", port)
+
 	http.HandleFunc("/", home)
 	http.HandleFunc("/users", users)
 
@@ -80,6 +81,8 @@ func home(w http.ResponseWriter, r *http.Request) {
 		401	: unauthorized
 		404 : not found
 		405: method not allowed
+
+		500: Server error
 
 		For more information: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 
