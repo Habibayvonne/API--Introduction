@@ -46,3 +46,49 @@ Note that : this is a personal preference. You can explore other options online.
 ---
 
 ## Lesson 3 : Middleware/ Gorrila Library
+
+Gorrila is just a collection of libraries that can be used in web APIs. We'll start with mux which helps in creating routers (views)
+
+With mux, you can specify the HTTP method (e.g GET, POST, PUT, PATCH, DELETE ) etc
+e.g
+
+```go
+var router = mux.NewRouter()
+router.HandleFunc("/users", controllers.UsersController).Methods("PUT", "POST")
+```
+
+This means, `/users` endpoint will only accept PUT and POST methods.
+
+In the controller, if you want to know the method, you can use r.Method from the *http.Request
+
+
+
+### Middleware
+
+A middleware is a middleman between the router and the controller. For example, controller1 returns data as an array [1,2,3] while controller2 returns data as a number e.d 4. However, you want to maintain the data structure between you and the client so that controller1 returns 
+
+```json
+{
+    "data": [1,2,3]
+}
+```
+
+and controller2 returns
+
+```json
+{
+    "data": 4
+}
+```
+
+Instead of writing the logic for conversion in each controller, you can just create a middleware.
+
+Another common use case for middlewares is authenticating requests. Therefore, before a request reaches a controller, it is authenticated first.
+
+In the first use of middlware (controller -> middleware -> router), we just define the middleware as a function and call it from the controller.
+
+In the second use of middleware (router -> middleware -> controller), we'll need to set the middleware on the router.
+
+---
+
+## Lesson 4 : Middleare 2, Connect to a Database

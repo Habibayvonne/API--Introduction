@@ -20,7 +20,7 @@ curl localhost:5000
 
 // another way (I recommend this)
 // You can use Postman/ Insomnia
-func HomeController(w http.ResponseWriter, r *http.Request) {
+func (b *Base) HomeController(w http.ResponseWriter, r *http.Request) {
 	response := map[string]string{
 		"hello": "world",
 	}
