@@ -91,4 +91,56 @@ In the second use of middleware (router -> middleware -> controller), we'll need
 
 ---
 
-## Lesson 4 : Middleare 2, Connect to a Database
+## Lesson 4 : Middleware 2, Connect to a Database
+
+The second type of middleware receives the request from the router (view) before it forwards it to the controller. this could be to authenticate the request or to check for anything.
+
+We will create a middleware that prints out all the headers sent by the client.
+
+The code is in `middleware/headers.go` and the function is called in the router (`controllers/base.go`)
+
+### Connecting to Mysql
+
+When connecting to MySQL we need a connection URI (Uniform Resource Identifier) its a connection string/ identifier for resources e.g databases, caches, queues.
+
+A MySQL URI is in the following format
+
+```shell
+username:password@host:port/db_name
+```
+
+E.g if your username is `root`, password is `password`, the database is on your `localhost` running on port `3306` and the database name is `chama`
+
+```shell
+root:password@tcp(localhost:3306)/chama
+```
+
+
+So to connect you can write this function that returns the pointer to the connection and an error (if it occures)
+
+```go
+
+
+import "database/sql"
+
+func ConnectToDB() (connection *sql.DB, err error) {
+
+	var dbURI = "root:password@tcp(localhost:3306)/chama"
+
+	connection, err = sql.Open("mysql", dbURI)
+	if err != nil {
+		return
+	}
+
+	// it is advisable to ping
+	err = connection.Ping()
+	if err != nil {
+		return
+	}
+
+	return
+
+}
+
+
+```
