@@ -1,3 +1,95 @@
+# How to have this repo
+
+1. You can fork it. This means you will have a copy on your github.com profile. When changes are made to either repo (either this or yours), they won't appear on the other. Basically, each repo will be independent.
+
+2. You can clone this repo (recommended)
+
+```sh
+cd go/src/
+git clone https://github.com/innv8/api-introduction
+cd api-introduction
+```
+
+This allows you to pull changes when they are made on this repo (on github)
+
+```sh
+git pull origin main
+```
+
+Then if you want to make it your own changes, I can make you a contributor and then you can have a branch e.g `dev`
+
+```sh
+git checkout -b dev
+```
+
+This will make a copy of the `main` branch into a new branch called `dev`
+
+If you want to branch from a specific branch e.g `lesson/04` you need to checkout to that branch before creating the `dev` branch
+
+```sh
+git checkout lesson/04
+git checkout -b dev
+```
+
+So lets say you have made changes on the dev branch you can commit with a message and push
+
+```sh
+# git add . basically bundles all your changes
+# the . means this whole directory
+# you need to run this in the root directory of the project
+
+git add . 
+
+# e.g
+# git commit -m "fixed bug that was preventing /users endpoint to get users from the db"
+git commit -m "the message describing what you have done"
+
+# push the changes to github/ any site that is hosting the repo
+git push origin dev
+```
+
+3. The other option is to clone this project, and then change its remote origin to be your own.
+
+
+- On your githu profile, create a repo and call it `api-introduction`
+
+- Clone the repo from `innv8`
+
+```sh
+cd go/src/
+git clone https://github.com/innv8/api-introduction.git
+cd api-introduction
+```
+
+- remove the remote. This is basically detaching the offline code from the online repo
+
+```sh
+# note: origin is the default name for the remote.
+# you can different origins if you want to be pushing your code to different remotes e.g github and gitlab but this usually almost never happens.
+git remote remove origin
+```
+
+
+- now connect the offline code to your online repo
+
+```sh
+git remote add origin https://github.com/innv8/api-introduction.git
+```
+
+- now push to your remote
+
+```sh
+# if you do
+# git push origin main
+# it will only push main
+# if you replace the branch name with '--all', then all the branches will be pushed.
+git push origin --all
+```
+
+
+---
+---
+
 # Web API
 
 A web API is an application that runs on a server and offers resources e.g a database to the clients.
