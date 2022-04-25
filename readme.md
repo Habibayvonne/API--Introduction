@@ -1,3 +1,95 @@
+# How to have this repo
+
+1. You can fork it. This means you will have a copy on your github.com profile. When changes are made to either repo (either this or yours), they won't appear on the other. Basically, each repo will be independent.
+
+2. You can clone this repo (recommended)
+
+```sh
+cd go/src/
+git clone https://github.com/innv8/api-introduction
+cd api-introduction
+```
+
+This allows you to pull changes when they are made on this repo (on github)
+
+```sh
+git pull origin main
+```
+
+Then if you want to make it your own changes, I can make you a contributor and then you can have a branch e.g `dev`
+
+```sh
+git checkout -b dev
+```
+
+This will make a copy of the `main` branch into a new branch called `dev`
+
+If you want to branch from a specific branch e.g `lesson/04` you need to checkout to that branch before creating the `dev` branch
+
+```sh
+git checkout lesson/04
+git checkout -b dev
+```
+
+So lets say you have made changes on the dev branch you can commit with a message and push
+
+```sh
+# git add . basically bundles all your changes
+# the . means this whole directory
+# you need to run this in the root directory of the project
+
+git add . 
+
+# e.g
+# git commit -m "fixed bug that was preventing /users endpoint to get users from the db"
+git commit -m "the message describing what you have done"
+
+# push the changes to github/ any site that is hosting the repo
+git push origin dev
+```
+
+3. The other option is to clone this project, and then change its remote origin to be your own.
+
+
+- On your githu profile, create a repo and call it `api-introduction`
+
+- Clone the repo from `innv8`
+
+```sh
+cd go/src/
+git clone https://github.com/innv8/api-introduction.git
+cd api-introduction
+```
+
+- remove the remote. This is basically detaching the offline code from the online repo
+
+```sh
+# note: origin is the default name for the remote.
+# you can different origins if you want to be pushing your code to different remotes e.g github and gitlab but this usually almost never happens.
+git remote remove origin
+```
+
+
+- now connect the offline code to your online repo
+
+```sh
+git remote add origin https://github.com/innv8/api-introduction.git
+```
+
+- now push to your remote
+
+```sh
+# if you do
+# git push origin main
+# it will only push main
+# if you replace the branch name with '--all', then all the branches will be pushed.
+git push origin --all
+```
+
+
+---
+---
+
 # Web API
 
 A web API is an application that runs on a server and offers resources e.g a database to the clients.
@@ -91,4 +183,56 @@ In the second use of middleware (router -> middleware -> controller), we'll need
 
 ---
 
-## Lesson 4 : Middleare 2, Connect to a Database
+## Lesson 4 : Middleware 2, Connect to a Database
+
+The second type of middleware receives the request from the router (view) before it forwards it to the controller. this could be to authenticate the request or to check for anything.
+
+We will create a middleware that prints out all the headers sent by the client.
+
+The code is in `middleware/headers.go` and the function is called in the router (`controllers/base.go`)
+
+### Connecting to Mysql
+
+When connecting to MySQL we need a connection URI (Uniform Resource Identifier) its a connection string/ identifier for resources e.g databases, caches, queues.
+
+A MySQL URI is in the following format
+
+```shell
+username:password@host:port/db_name
+```
+
+E.g if your username is `root`, password is `password`, the database is on your `localhost` running on port `3306` and the database name is `chama`
+
+```shell
+root:password@tcp(localhost:3306)/chama
+```
+
+
+So to connect you can write this function that returns the pointer to the connection and an error (if it occures)
+
+```go
+
+
+import "database/sql"
+
+func ConnectToDB() (connection *sql.DB, err error) {
+
+	var dbURI = "root:password@tcp(localhost:3306)/chama"
+
+	connection, err = sql.Open("mysql", dbURI)
+	if err != nil {
+		return
+	}
+
+	// it is advisable to ping
+	err = connection.Ping()
+	if err != nil {
+		return
+	}
+
+	return
+
+}
+
+
+```
