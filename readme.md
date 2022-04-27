@@ -236,3 +236,42 @@ func ConnectToDB() (connection *sql.DB, err error) {
 
 
 ```
+
+To read from the database, we need write a query and use the db connection pointer to fetch the details
+
+
+```go
+
+type User struct {
+	ID int
+	Name string
+}
+
+func FetchUsers(db *sql.DB) (users []User, err error) {
+	var query = "SELECT id, name FROM users"
+
+	rows, err := db.Query(query)
+	if err != nil {
+		// deal with error
+		return
+	}
+
+	// loop through the rows until the end
+	// in each loop read into an instance of User (or individual id, name variables)
+	for rows.Next() {
+		var user User
+
+		err = rows.Scan(&user.ID, &user.Name)
+		if err != nil {
+			// deal with error
+			return
+		}
+
+		users = append(users, user)
+
+	}
+
+	log.Println("got %d users from db", len(users))
+	return
+}
+```
