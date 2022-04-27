@@ -275,3 +275,29 @@ func FetchUsers(db *sql.DB) (users []User, err error) {
 	return
 }
 ```
+
+---
+## Lesson 5 : Dealing with Databases
+
+We can import the `chama.sql` file into mysql. 
+
+- Connect to mysql and create a database called `chama`
+
+```sh
+mysql -u username -ppassword
+```
+
+```sh
+create database chama
+```
+
+- Exit mysql console and import the `chama.sql` file
+
+```sh
+mysql -u user -ppassword chama < chama.sql
+```
+
+We will change the `GetUsers` to return members.
+
+Refer to `models/users.go`
+

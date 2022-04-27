@@ -10,10 +10,18 @@ import (
 
 // http.ResponseWriter is used to write the response to the client
 // http.Request pointer has all the data from the client
-func (b *Base) UsersController(w http.ResponseWriter, r *http.Request) {
+func (b *Base) MembersController(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("the connection that reached the controller ", r.Header.Get("Connection"))
 
-	users, _ := models.GetUsers(b.DB)
-	middleware.JSONResponse(w, 200, users)
+	members, _ := models.FetchMembers(b.DB)
+	middleware.JSONResponse(w, 200, members)
+}
+
+func (b *Base) MembersByPostionController(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("the connection that reached the controller ", r.Header.Get("Connection"))
+
+	members, _ := models.FetchMembersByPosition(1, b.DB)
+	middleware.JSONResponse(w, 200, members)
 }

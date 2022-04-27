@@ -27,7 +27,8 @@ func (b *Base) StartRouter() {
 	b.Router = mux.NewRouter()
 
 	b.Router.HandleFunc("/", middleware.HeadersMiddleware(b.HomeController))
-	b.Router.HandleFunc("/users", middleware.HeadersMiddleware(b.UsersController)).Methods("GET", "POST")
+	b.Router.HandleFunc("/members", middleware.HeadersMiddleware(b.MembersController)).Methods("GET", "POST")
+	b.Router.HandleFunc("/members-by-position", middleware.HeadersMiddleware(b.MembersByPostionController)).Methods("GET", "POST")
 
 }
 
