@@ -24,4 +24,12 @@ func (b *Base) MembersByPostionController(w http.ResponseWriter, r *http.Request
 
 	members, _ := models.FetchMembersByPosition(1, b.DB)
 	middleware.JSONResponse(w, 200, members)
+} 
+
+func (b *Base) TransactionController(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("the connection that reached the controller ", r.Header.Get("Connection"))
+
+	transaction, _ := models.FetchTransaction(b.DB)
+	middleware.JSONResponse(w, 200, transaction)
 }
