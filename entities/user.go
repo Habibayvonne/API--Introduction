@@ -32,3 +32,13 @@ type Member struct {
 	Modified    string `json:"modified,omitempty"` // if dealing with json, you can use omitempty to omit empty values
 	NextOfKin   string `json:"nextOfKin"`
 }
+type Transaction struct {
+	Id int 'json:"id'
+	Transaction_type int 'json:"transaction_type"'
+	Amount int 'json:"amount"'
+	Is_credit int 'json:"is_credit"'
+	Member int 'json:"member"'
+	Created string 'json:"created"'
+	Modified string 'json:"modified,omitempty"'
+	
+}
