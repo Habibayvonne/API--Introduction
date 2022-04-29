@@ -197,8 +197,8 @@ func FetchTransaction(db *sql.DB) (transaction []entities.Transaction, err error
 			return 
 		}
 
-		member.Modified = modified.String
-		members = append(members, member)
+		transaction.Modified = modified.String
+		transaction = append(transactioin, transaction)
 	}
 
 	log.Printf("found %d transaction", len(transaction))
