@@ -168,3 +168,39 @@ func FetchMembersByPosition(position int, db *sql.DB) (members []entities.Member
 	log.Printf("found %d members", len(members))
 	return
 }
+
+func FetchTransaction(db *sql.DB) (transaction []entities.Transaction, err error) {
+	var fetchTransactionQuery = `SELECT id, transaction_type, amount, 
+	is_credit, member, created, modified
+	FROM transaction`
+	rows, err := db.Query(fetchTransactionQuery)
+	if err != nil {
+		log.Printf("unable to fetch transacton because %v", err)
+		return
+	}
+
+	for rows.Next() {
+		var transaction entities.Transaction
+		var modified sql.NullString
+
+		err = rows.Scan(
+			&transaction.Id,
+			&transaction.Transaction_type,
+			&transaction.amount,
+			&transaction.is_credit,
+			&transaction.member,
+			&transaction.Created,
+			&modified,
+		)
+		if err != nil {
+			log.Printf("unable to scan transaction because %v", err)
+			return 
+		}
+
+		member.Modified = modified.String
+		members = append(members, member)
+	}
+
+	log.Printf("found %d transaction", len(transaction))
+	return
+}
