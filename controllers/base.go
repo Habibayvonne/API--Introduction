@@ -29,7 +29,7 @@ func (b *Base) StartRouter() {
 	b.Router.HandleFunc("/", middleware.HeadersMiddleware(b.HomeController))
 	b.Router.HandleFunc("/members", middleware.HeadersMiddleware(b.MembersController)).Methods("GET", "POST")
 	b.Router.HandleFunc("/members-by-position", middleware.HeadersMiddleware(b.MembersByPostionController)).Methods("GET", "POST")
-
+	b.Router.HandleFunc("/transaction",middleware.HeadersMiddleware(b.transactionController)).Methods("GET","POST")
 }
 
 func (b *Base) StartAPI() {
