@@ -4,7 +4,7 @@ import "database/sql"
 
 func ConnectToDB() (connection *sql.DB, err error) {
 
-	var dbURI = "root:therealsam@tcp(localhost:3306)/chama"
+	var dbURI = "habiba:123456789@tcp(localhost:3306)/chama"
 
 	connection, err = sql.Open("mysql", dbURI)
 	if err != nil {
